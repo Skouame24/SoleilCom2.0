@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -51,9 +51,9 @@ const ResponsiveTable = () => {
 
   if (error) {
     return (
-      <Card className="bg-destructive/5 border-destructive/20">
+      <Card className="bg-red-50 border-red-200">
         <CardContent className="pt-6">
-          <div className="text-center text-destructive">
+          <div className="text-center text-red-600">
             <p className="font-semibold">Erreur lors du chargement des fournisseurs</p>
             <p className="text-sm mt-1">{error}</p>
           </div>
@@ -64,21 +64,21 @@ const ResponsiveTable = () => {
 
   return (
     <Card className="shadow-sm">
-      <CardHeader className="flex flex-row items-center justify-between bg-[#4F46E5] text-white py-4">
+      <CardHeader className="flex flex-row items-center justify-between bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 text-white py-4">
         <div className="flex items-center space-x-2">
           <Users className="h-5 w-5" />
-          <h3 className="font-semibold text-lg">Fournisseurs récents</h3>
+          <h3 className="font-semibold text-lg">Fournisseurs les plus actifs</h3>
         </div>
       </CardHeader>
       <CardContent className="p-0">
         <Table>
-          <TableHeader className="bg-[#4F46E5]/5">
-            <TableRow>
-              <TableHead className="w-24 text-[#4F46E5]">Classement</TableHead>
-              <TableHead className="text-[#4F46E5]">Nom</TableHead>
-              <TableHead className="text-[#4F46E5]">Email</TableHead>
-              <TableHead className="text-[#4F46E5]">Téléphone</TableHead>
-              <TableHead className="text-[#4F46E5]">Adresse</TableHead>
+          <TableHeader>
+            <TableRow className="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900">
+              <TableHead className="text-white font-semibold py-4">Classement</TableHead>
+              <TableHead className="text-white font-semibold py-4">Nom</TableHead>
+              <TableHead className="text-white font-semibold py-4">Email</TableHead>
+              <TableHead className="text-white font-semibold py-4">Téléphone</TableHead>
+              <TableHead className="text-white font-semibold py-4">Adresse</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -94,17 +94,24 @@ const ResponsiveTable = () => {
               ))
             ) : topThreeSuppliers.length > 0 ? (
               topThreeSuppliers.map((supplier, index) => (
-                <TableRow key={supplier.id} className="hover:bg-muted/50">
-                  <TableCell className="font-medium">{index + 1}</TableCell>
-                  <TableCell>{supplier.nom} {supplier.prenom}</TableCell>
-                  <TableCell>{supplier.email}</TableCell>
-                  <TableCell>{supplier.contact}</TableCell>
-                  <TableCell>{supplier.localisation}</TableCell>
+                <TableRow 
+                  key={supplier.id} 
+                  className="border-b hover:bg-gradient-to-r hover:from-yellow-50/20 hover:to-transparent transition-colors duration-200"
+                >
+                  <TableCell className="font-medium text-blue-900">{index + 1}</TableCell>
+                  <TableCell className="text-gray-600">{supplier.nom} {supplier.prenom}</TableCell>
+                  <TableCell className="text-gray-600">{supplier.email}</TableCell>
+                  <TableCell>
+                    <span className="text-gray-600 bg-yellow-50/50 px-2 py-1 rounded-full text-sm">
+                      {supplier.contact}
+                    </span>
+                  </TableCell>
+                  <TableCell className="text-gray-600">{supplier.localisation}</TableCell>
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={5} className="text-center text-muted-foreground h-24">
+                <TableCell colSpan={5} className="text-center text-gray-600 h-24">
                   Aucun fournisseur trouvé
                 </TableCell>
               </TableRow>

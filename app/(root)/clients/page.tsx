@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Plus, ChevronLeft, ChevronRight, Building2, MapPin, Mail, Phone, User } from "lucide-react";
+import { Search, Plus, ChevronLeft, ChevronRight, Building2, MapPin, Mail, Phone, User, Users } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -21,10 +21,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 import axios from "axios";
 
 export default function ClientsTable() {
-  const [clients, setClients] = useState([]); // Initialisation en tant que tableau vide
+  const [clients, setClients] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
@@ -44,9 +45,7 @@ export default function ClientsTable() {
   const fetchClients = () => {
     axios.get("http://localhost:5001/api/clients")
       .then(response => {
-        // Assurer que la réponse est un tableau
-        const data = response.data.clients || []; // Accède au tableau à l'intérieur de `clients`
-        console.log(data);
+        const data = response.data.clients || [];
         setClients(data);
       })
       .catch(error => {
@@ -86,28 +85,33 @@ export default function ClientsTable() {
   );
 
   return (
-    <div className="container mx-auto py-6 px-4">
+    <div className="container mx-auto py-8 px-4 bg-gradient-to-br from-gray-50 to-blue-50/20">
       {/* Header */}
       <div className="mb-6">
         <div className="flex items-center gap-3 mb-2">
-          <h1 className="text-3xl font-bold text-gray-800">Base des clients</h1>
+          <Users className="h-7 w-7 text-yellow-500" />
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 bg-clip-text text-transparent">
+            Base des clients
+          </h1>
         </div>
-        <p className="text-gray-600 ml-11">Gérez efficacement votre réseau de clients et leurs informations</p>
+        <p className="text-primary-600 ml-9">Gérez efficacement votre réseau de clients et leurs informations</p>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 hover:border-yellow-200/50 transition-all duration-300">
         {/* Action Bar */}
         <div className="p-6 flex flex-col sm:flex-row justify-between items-center gap-4 border-b border-gray-100">
           <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
-              <Button className="bg-[#4169E1] hover:bg-[#3154b3] text-white rounded-full px-6 w-full sm:w-auto">
+              <Button className="bg-gradient-to-r from-blue-800 to-blue-900 hover:from-blue-900 hover:to-blue-950 text-white shadow transition-all duration-300 rounded-full px-6 w-full sm:w-auto">
                 <Plus className="mr-2 h-4 w-4" />
                 Ajouter un client
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[500px]">
+            <DialogContent className="sm:max-w-[500px] bg-white">
               <DialogHeader>
-                <DialogTitle className="text-2xl font-bold text-gray-800">Nouveau Client</DialogTitle>
+                <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 bg-clip-text text-transparent">
+                  Nouveau Client
+                </DialogTitle>
                 <DialogDescription className="text-gray-600">
                   Ajoutez un nouveau client à votre base de données
                 </DialogDescription>
@@ -115,13 +119,12 @@ export default function ClientsTable() {
               <form onSubmit={handleSubmit} className="space-y-4 mt-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="nom">Nom</Label>
+                    <Label className="text-gray-700">Nom</Label>
                     <div className="relative">
                       <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                       <Input
-                        id="nom"
                         placeholder="Nom"
-                        className="pl-10"
+                        className="pl-10 border-gray-200 focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all duration-300"
                         value={newClient.nom}
                         onChange={(e) => setNewClient({ ...newClient, nom: e.target.value })}
                         required
@@ -129,13 +132,12 @@ export default function ClientsTable() {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="prenom">Prénom</Label>
+                    <Label className="text-gray-700">Prénom</Label>
                     <div className="relative">
                       <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                       <Input
-                        id="prenom"
                         placeholder="Prénom"
-                        className="pl-10"
+                        className="pl-10 border-gray-200 focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all duration-300"
                         value={newClient.prenom}
                         onChange={(e) => setNewClient({ ...newClient, prenom: e.target.value })}
                         required
@@ -144,14 +146,13 @@ export default function ClientsTable() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label className="text-gray-700">Email</Label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                     <Input
-                      id="email"
                       type="email"
                       placeholder="email@example.com"
-                      className="pl-10"
+                      className="pl-10 border-gray-200 focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all duration-300"
                       value={newClient.email}
                       onChange={(e) => setNewClient({ ...newClient, email: e.target.value })}
                       required
@@ -159,13 +160,12 @@ export default function ClientsTable() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="contact">Contact</Label>
+                  <Label className="text-gray-700">Contact</Label>
                   <div className="relative">
                     <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                     <Input
-                      id="contact"
                       placeholder="Numéro de téléphone"
-                      className="pl-10"
+                      className="pl-10 border-gray-200 focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all duration-300"
                       value={newClient.contact}
                       onChange={(e) => setNewClient({ ...newClient, contact: e.target.value })}
                       required
@@ -173,13 +173,12 @@ export default function ClientsTable() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="adresse">Adresse</Label>
+                  <Label className="text-gray-700">Adresse</Label>
                   <div className="relative">
                     <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                     <Input
-                      id="adresse"
                       placeholder="Adresse"
-                      className="pl-10"
+                      className="pl-10 border-gray-200 focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all duration-300"
                       value={newClient.adresse}
                       onChange={(e) => setNewClient({ ...newClient, adresse: e.target.value })}
                       required
@@ -191,12 +190,13 @@ export default function ClientsTable() {
                     type="button"
                     variant="outline"
                     onClick={() => setIsOpen(false)}
+                    className="border-gray-200 hover:bg-gray-50/75 transition-all duration-300"
                   >
                     Annuler
                   </Button>
                   <Button
                     type="submit"
-                    className="bg-[#4169E1] hover:bg-[#3154b3] text-white"
+                    className="bg-gradient-to-r from-blue-800 to-blue-900 hover:from-blue-900 hover:to-blue-950 text-white shadow transition-all duration-300"
                   >
                     Ajouter le client
                   </Button>
@@ -209,7 +209,7 @@ export default function ClientsTable() {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
             <Input
               placeholder="Rechercher un client..."
-              className="pl-10 pr-4 py-2 w-full rounded-full border-gray-200 focus:border-[#4169E1] focus:ring focus:ring-[#4169E1] focus:ring-opacity-50"
+              className="pl-10 pr-4 py-2 w-full rounded-full border-gray-200 focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all duration-300"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -221,12 +221,12 @@ export default function ClientsTable() {
           <div className="rounded-lg border border-gray-100 overflow-hidden">
             <Table>
               <TableHeader>
-                <TableRow className="bg-gray-50/75">
-                  <TableHead className="text-gray-700 font-semibold">Nom</TableHead>
-                  <TableHead className="text-gray-700 font-semibold">Prénom</TableHead>
-                  <TableHead className="text-gray-700 font-semibold">Email</TableHead>
-                  <TableHead className="text-gray-700 font-semibold">Contact</TableHead>
-                  <TableHead className="text-gray-700 font-semibold">Adresse</TableHead>
+                <TableRow className="bg-gradient-to-r from-blue-50 to-blue-100 border-b border-gray-200">
+                  <TableHead className="font-semibold text-blue-900">Nom</TableHead>
+                  <TableHead className="font-semibold text-blue-900">Prénom</TableHead>
+                  <TableHead className="font-semibold text-blue-900">Email</TableHead>
+                  <TableHead className="font-semibold text-blue-900">Contact</TableHead>
+                  <TableHead className="font-semibold text-blue-900">Adresse</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -246,16 +246,22 @@ export default function ClientsTable() {
                   displayedClients.map((client, index) => (
                     <TableRow
                       key={index}
-                      className="hover:bg-gray-50/75 transition-colors cursor-pointer"
+                      className="hover:bg-yellow-50/50 transition-colors duration-200"
                     >
                       <TableCell className="font-medium text-gray-900">
                         {client.nom}
                       </TableCell>
                       <TableCell className="text-gray-700">{client.prenom}</TableCell>
-                      <TableCell className="text-gray-600">
-                        {client.email}
+                      <TableCell>
+                        <Badge className="bg-gradient-to-r from-blue-100 to-blue-50 text-blue-800 hover:from-blue-200 hover:to-blue-100 transition-colors duration-200">
+                          {client.email}
+                        </Badge>
                       </TableCell>
-                      <TableCell className="text-gray-700">{client.contact}</TableCell>
+                      <TableCell>
+                        <span className="text-gray-700 bg-gray-100 px-2 py-1 rounded-full text-sm">
+                          {client.contact}
+                        </span>
+                      </TableCell>
                       <TableCell className="text-gray-700">{client.adresse}</TableCell>
                     </TableRow>
                   ))
@@ -272,7 +278,7 @@ export default function ClientsTable() {
                 size="sm"
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                className="text-gray-600 hover:bg-gray-50"
+                className="text-gray-600 hover:bg-gray-50 border-gray-200 transition-all duration-300"
               >
                 <ChevronLeft className="h-4 w-4 mr-1" />
                 Précédent
@@ -284,10 +290,10 @@ export default function ClientsTable() {
                     key={page}
                     variant={currentPage === page ? "default" : "outline"}
                     size="sm"
-                    className={`px-4 min-w-[40px] ${
+                    className={`px-4 min-w-[40px] transition-all duration-300 ${
                       currentPage === page
-                        ? "bg-[#4169E1] text-white hover:bg-[#3154b3]"
-                        : "text-gray-600 hover:bg-gray-50"
+                        ? "bg-gradient-to-r from-blue-800 to-blue-900 hover:from-blue-900 hover:to-blue-950 text-white shadow"
+                        : "text-gray-600 hover:bg-gray-50 border-gray-200"
                     }`}
                     onClick={() => setCurrentPage(page)}
                   >
@@ -301,7 +307,7 @@ export default function ClientsTable() {
                 size="sm"
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
-                className="text-gray-600 hover:bg-gray-50"
+                className="text-gray-600 hover:bg-gray-50 border-gray-200 transition-all duration-300"
               >
                 Suivant
                 <ChevronRight className="h-4 w-4 ml-1" />

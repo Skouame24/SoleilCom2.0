@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Printer, Activity, Clock, Calendar, Users } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -10,19 +10,21 @@ import ResponsiveTable from '@/components/ResponsiveTable';
 import AchatTable from '@/components/AchatTable';
 
 const StatCard = ({ title, value, icon: Icon, isLoading }) => (
-  <Card className="hover:shadow-lg transition-shadow duration-200">
+  <Card className="bg-white hover:shadow-lg transition-all duration-300 border border-gray-100 hover:border-yellow-300/50">
     <CardContent className="p-6">
-      <div className="flex items-center justify-between mb-4">
-        <div className="space-y-1">
-          <p className="text-sm font-medium text-muted-foreground">{title}</p>
+      <div className="flex items-center justify-between">
+        <div className="space-y-2">
+          <p className="text-sm font-medium text-gray-600">{title}</p>
           {isLoading ? (
-            <Skeleton className="h-7 w-16" />
+            <Skeleton className="h-8 w-20" />
           ) : (
-            <p className="text-2xl font-bold">{value}</p>
+            <p className="text-3xl font-bold bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 bg-clip-text text-transparent">
+              {value}
+            </p>
           )}
         </div>
-        <div className="p-3 bg-primary/5 rounded-full">
-          <Icon className="h-5 w-5 text-primary" />
+        <div className="p-3 bg-gradient-to-br from-yellow-50 via-yellow-100 to-yellow-50 rounded-xl">
+          <Icon className="h-6 w-6 text-yellow-600" />
         </div>
       </div>
     </CardContent>
@@ -80,8 +82,11 @@ const EtatAchat = () => {
       <div className="min-h-[400px] flex items-center justify-center">
         <div className="text-center space-y-4">
           <p className="text-xl font-semibold text-red-600">Une erreur est survenue</p>
-          <p className="text-muted-foreground">{error}</p>
-          <Button onClick={() => window.location.reload()}>
+          <p className="text-gray-600">{error}</p>
+          <Button 
+            onClick={() => window.location.reload()}
+            className="bg-gradient-to-r from-blue-800 to-blue-900 hover:from-blue-900 hover:to-blue-950 text-white"
+          >
             Réessayer
           </Button>
         </div>
@@ -90,25 +95,25 @@ const EtatAchat = () => {
   }
 
   return (
-    <section className="space-y-8">
+    <section className="space-y-8 bg-gradient-to-br from-gray-50 to-yellow-50/20 min-h-screen pb-12">
       {/* Header */}
-      <div className="gradient-button bg-[#4F46E5] from-primary to-primary/80 text-white p-8 rounded-lg">
-        <div className="container mx-auto">
-          <div className="flex justify-between items-center">
+      <div className="bg-gradient-to-r from-blue-800 via-blue-900 to-blue-800 text-white border-b-4 border-yellow-400/20">
+        <div className="container mx-auto py-8 px-4">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <Activity className="h-6 w-6" />
-                <h1 className="text-2xl font-bold">États des achats</h1>
+              <div className="flex items-center gap-3">
+                <Activity className="h-7 w-7 text-yellow-400" />
+                <h1 className="text-3xl font-bold bg-gradient-to-r from-white via-yellow-100/90 to-white bg-clip-text text-transparent">
+                  États des achats
+                </h1>
               </div>
-              <p className="text-white/80">Gérer les espaces liés aux achats</p>
+              <p className="text-blue-100">Supervision et analyse des transactions d'achat</p>
             </div>
             <Button
-              variant="secondary"
-              size="sm"
-              className="gap-2"
               onClick={printPage}
+              className="bg-white/10 hover:bg-white/20 text-white border border-white/20 shadow-sm"
             >
-              <Printer className="h-4 w-4" />
+              <Printer className="h-4 w-4 mr-2" />
               Générer un rapport
             </Button>
           </div>
@@ -116,10 +121,10 @@ const EtatAchat = () => {
       </div>
 
       {/* Stats Grid */}
-      <div className="container mx-auto">
+      <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <StatCard
-            title="Total achats"
+            title="Total des achats"
             value={stats.totalAchats}
             icon={Activity}
             isLoading={isLoading}
@@ -137,7 +142,7 @@ const EtatAchat = () => {
             isLoading={isLoading}
           />
           <StatCard
-            title="Fournisseurs"
+            title="Fournisseurs actifs"
             value={stats.fournisseurs.length}
             icon={Users}
             isLoading={isLoading}
@@ -145,17 +150,27 @@ const EtatAchat = () => {
         </div>
 
         {/* Tables */}
-        <div className="mt-8 space-y-6">
+        <div className="mt-12 space-y-8">
           {isLoading ? (
             <div className="space-y-4">
               <Skeleton className="h-8 w-full" />
-              <Skeleton className="h-[200px] w-full" />
+              <Skeleton className="h-[400px] w-full rounded-xl" />
             </div>
           ) : (
-            <>
-              <ResponsiveTable />
-              <AchatTable />
-            </>
+            <div className="space-y-3">
+              {/* <div className="flex items-center space-x-2">
+                <Users className="h-5 w-5 text-blue-900" />
+                <h3 className="font-semibold text-lg  from-blue-900 via-blue-800 to-blue-900 bg-clip-text">
+                  Fournisseurs récents
+                </h3>
+              </div> */}
+                <ResponsiveTable />
+              
+              <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                
+                <AchatTable />
+              </div>
+            </div>
           )}
         </div>
       </div>

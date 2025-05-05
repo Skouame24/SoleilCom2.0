@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Trash2, Pencil, Plus } from "lucide-react";
+import { Trash2, Pencil, Plus, ShoppingCart } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import axios from "axios";
@@ -242,22 +242,27 @@ export default function PurchaseForm() {
   const totals = calculateTotals();
 
   return (
-    <div className="container mx-auto py-8 px-4">
-      <h1 className="text-2xl font-bold mb-6">Enregistrer un achat</h1>
+    <div className="container mx-auto py-8 px-4 bg-gradient-to-br from-gray-50 to-blue-50/20">
+      <div className="flex items-center gap-3 mb-6">
+        <ShoppingCart className="h-7 w-7 text-yellow-500" />
+        <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 bg-clip-text text-transparent">
+          Enregistrer un achat
+        </h1>
+      </div>
       
       <form onSubmit={handleFormSubmit} className="space-y-6">
-        <Card>
-          <CardHeader className="bg-[#4F46E5] text-white">
+        <Card className="border border-gray-100 hover:border-yellow-200/50 transition-all duration-300 shadow-sm hover:shadow-md">
+          <CardHeader className="bg-gradient-to-r from-blue-800 via-blue-900 to-blue-800 text-white border-b-2 border-yellow-400/20">
             <h2 className="text-lg font-semibold">Détails Fournisseur</h2>
           </CardHeader>
           <CardContent className="grid md:grid-cols-2 gap-6 pt-6">
             <div className="space-y-2">
-              <Label>Fournisseur</Label>
+              <Label className="text-gray-700">Fournisseur</Label>
               <Select
                 value={selectedFournisseur}
                 onValueChange={setSelectedFournisseur}
               >
-                <SelectTrigger>
+                <SelectTrigger className="border-gray-200 focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all duration-300">
                   <SelectValue placeholder="Choisissez un fournisseur" />
                 </SelectTrigger>
                 <SelectContent>
@@ -273,38 +278,39 @@ export default function PurchaseForm() {
             </div>
             
             <div className="space-y-2">
-              <Label>Date</Label>
+              <Label className="text-gray-700">Date</Label>
               <Input
                 type="date"
                 value={selectedDate}
                 onChange={(e) => setSelectedDate(e.target.value)}
                 required
+                className="border-gray-200 focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all duration-300"
               />
             </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between bg-white">
-            <h2 className="text-lg font-semibold">Information Article</h2>
+        <Card className="border border-gray-100 hover:border-yellow-200/50 transition-all duration-300 shadow-sm hover:shadow-md">
+          <CardHeader className="flex flex-row items-center justify-between bg-white border-b border-gray-100 pb-4">
+            <h2 className="text-lg font-semibold bg-gradient-to-r from-blue-900 to-blue-800 bg-clip-text text-transparent">Information Article</h2>
             <Button
               onClick={handleAddToTable}
               disabled={!selectedArticle || selectedQuantity <= 0 || selectedPrice <= 0}
-              className="bg-[#4F46E5] hover:bg-[#4F46E5]/90"
+              className="bg-gradient-to-r from-blue-800 to-blue-900 hover:from-blue-900 hover:to-blue-950 text-white shadow transition-all duration-300"
             >
               <Plus className="mr-2 h-4 w-4" />
               Ajouter
             </Button>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-6 pt-4">
             <div className="grid md:grid-cols-4 gap-4">
               <div className="space-y-2">
-                <Label>Article</Label>
+                <Label className="text-gray-700">Article</Label>
                 <Select
                   value={selectedArticle}
                   onValueChange={setSelectedArticle}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="border-gray-200 focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all duration-300">
                     <SelectValue placeholder="Sélectionnez un article" />
                   </SelectTrigger>
                   <SelectContent>
@@ -320,22 +326,23 @@ export default function PurchaseForm() {
               </div>
 
               <div className="space-y-2">
-                <Label>Quantité</Label>
+                <Label className="text-gray-700">Quantité</Label>
                 <Input
                   type="number"
                   value={selectedQuantity}
                   onChange={(e) => setSelectedQuantity(parseInt(e.target.value, 10))}
                   min="1"
+                  className="border-gray-200 focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all duration-300"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label>Groupe</Label>
+                <Label className="text-gray-700">Groupe</Label>
                 <Select
                   value={type}
                   onValueChange={setType}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="border-gray-200 focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all duration-300">
                     <SelectValue placeholder="Choisissez un type" />
                   </SelectTrigger>
                   <SelectContent>
@@ -351,20 +358,21 @@ export default function PurchaseForm() {
               </div>
 
               <div className="space-y-2">
-                <Label>Prix</Label>
+                <Label className="text-gray-700">Prix</Label>
                 <Input
                   type="number"
                   value={selectedPrice}
                   onChange={(e) => setSelectedPrice(parseFloat(e.target.value))}
                   min="0"
                   step="0.01"
+                  className="border-gray-200 focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all duration-300"
                 />
               </div>
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label>Remise article (%)</Label>
+                <Label className="text-gray-700">Remise article (%)</Label>
                 <Input
                   type="number"
                   value={remisePercentage}
@@ -372,11 +380,12 @@ export default function PurchaseForm() {
                   min="0"
                   max="100"
                   step="0.01"
+                  className="border-gray-200 focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all duration-300"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label>TVA (%)</Label>
+                <Label className="text-gray-700">TVA (%)</Label>
                 <Input
                   type="number"
                   value={tvaPercentage}
@@ -384,100 +393,122 @@ export default function PurchaseForm() {
                   min="0"
                   max="100"
                   step="0.01"
+                  className="border-gray-200 focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all duration-300"
                 />
               </div>
             </div>
 
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Désignation</TableHead>
-                  <TableHead>Quantité</TableHead>
-                  <TableHead>Prix U HT</TableHead>
-                  <TableHead>Montant HT</TableHead>
-                  <TableHead>Remise</TableHead>
-                  <TableHead>TVA</TableHead>
-                  <TableHead>Montant TTC</TableHead>
-                  <TableHead>Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {addedArticles.map((article, index) => (
-                  <TableRow key={index}>
-                    <TableCell>{article.designation}</TableCell>
-                    <TableCell>{article.quantite}</TableCell>
-                    <TableCell>{article.prix.toFixed(2)} FCFA</TableCell>
-                    <TableCell>{article.montantHT.toFixed(2)} FCFA</TableCell>
-                    <TableCell>{article.remiseArticle.toFixed(2)} FCFA</TableCell>
-                    <TableCell>{article.tvaArticle.toFixed(2)} FCFA</TableCell>
-                    <TableCell>{article.montantTTC.toFixed(2)} FCFA</TableCell>
-                    <TableCell>
-                      <div className="flex space-x-2">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => handleDeleteArticle(index)}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => handleEditArticle(index)}
-                        >
-                          <Pencil className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </TableCell>
+            <div className="overflow-hidden rounded-lg border border-gray-100 shadow-sm">
+              <Table>
+                <TableHeader className="bg-gradient-to-r from-blue-50 to-blue-100 border-b border-gray-200">
+                  <TableRow>
+                    <TableHead className="font-semibold text-blue-900">Désignation</TableHead>
+                    <TableHead className="font-semibold text-blue-900">Quantité</TableHead>
+                    <TableHead className="font-semibold text-blue-900">Prix U HT</TableHead>
+                    <TableHead className="font-semibold text-blue-900">Montant HT</TableHead>
+                    <TableHead className="font-semibold text-blue-900">Remise</TableHead>
+                    <TableHead className="font-semibold text-blue-900">TVA</TableHead>
+                    <TableHead className="font-semibold text-blue-900">Montant TTC</TableHead>
+                    <TableHead className="font-semibold text-blue-900">Actions</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {addedArticles.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={8} className="text-center py-8 text-gray-500">
+                        Aucun article ajouté pour le moment.
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    addedArticles.map((article, index) => (
+                      <TableRow key={index} className="hover:bg-yellow-50/50 transition-colors duration-200">
+                        <TableCell className="font-medium">{article.designation}</TableCell>
+                        <TableCell>{article.quantite}</TableCell>
+                        <TableCell>{article.prix.toFixed(2)} FCFA</TableCell>
+                        <TableCell>{article.montantHT.toFixed(2)} FCFA</TableCell>
+                        <TableCell>{article.remiseArticle.toFixed(2)} FCFA</TableCell>
+                        <TableCell>{article.tvaArticle.toFixed(2)} FCFA</TableCell>
+                        <TableCell className="font-medium">{article.montantTTC.toFixed(2)} FCFA</TableCell>
+                        <TableCell>
+                          <div className="flex space-x-2">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => handleDeleteArticle(index)}
+                              className="text-red-500 hover:text-red-700 hover:bg-red-50 transition-colors duration-200"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => handleEditArticle(index)}
+                              className="text-blue-500 hover:text-blue-700 hover:bg-blue-50 transition-colors duration-200"
+                            >
+                              <Pencil className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </div>
           </CardContent>
         </Card>
 
         <div className="flex justify-center">
           <div className="w-1/2">
-            <Label>Remise globale (%)</Label>
-            <Input
-              type="number"
-              value={remiseTotalPourcent}
-              onChange={(e) => setRemiseTotalPourcent(parseFloat(e.target.value))}
-              min="0"
-              max="100"
-              step="0.01"
-            />
+            <Card className="border border-gray-100 hover:border-yellow-200/50 transition-all duration-300 shadow-sm hover:shadow-md">
+              <CardContent className="py-4">
+                <div className="space-y-2">
+                  <Label className="text-gray-700">Remise globale (%)</Label>
+                  <Input
+                    type="number"
+                    value={remiseTotalPourcent}
+                    onChange={(e) => setRemiseTotalPourcent(parseFloat(e.target.value))}
+                    min="0"
+                    max="100"
+                    step="0.01"
+                    className="border-gray-200 focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all duration-300"
+                  />
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
 
-        <Card>
-          <CardHeader className="bg-[#4F46E5] text-white">
+        <Card className="border border-gray-100 hover:border-yellow-200/50 transition-all duration-300 shadow-sm hover:shadow-md">
+          <CardHeader className="bg-gradient-to-r from-blue-800 via-blue-900 to-blue-800 text-white border-b-2 border-yellow-400/20">
             <h2 className="text-lg font-semibold">Récapitulatif</h2>
           </CardHeader>
           <CardContent className="pt-6">
             {addedArticles.length > 0 ? (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Total HT</TableHead>
-                    <TableHead>Remise articles</TableHead>
-                    <TableHead>Remise globale ({remiseTotalPourcent}%)</TableHead>
-                    <TableHead>Total TVA</TableHead>
-                    <TableHead>Montant TTC</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>{totals.totalHT.toFixed(2)} FCFA</TableCell>
-                    <TableCell>{totals.totalRemiseArticles.toFixed(2)} FCFA</TableCell>
-                    <TableCell>{totals.remiseGlobale.toFixed(2)} FCFA</TableCell>
-                    <TableCell>{totals.totalTVA.toFixed(2)} FCFA</TableCell>
-                    <TableCell>{totals.montantTTC.toFixed(2)} FCFA</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
+              <div className="overflow-hidden rounded-lg border border-gray-100 shadow-sm">
+                <Table>
+                  <TableHeader className="bg-gradient-to-r from-blue-50 to-blue-100 border-b border-gray-200">
+                    <TableRow>
+                      <TableHead className="font-semibold text-blue-900">Total HT</TableHead>
+                      <TableHead className="font-semibold text-blue-900">Remise articles</TableHead>
+                      <TableHead className="font-semibold text-blue-900">Remise globale ({remiseTotalPourcent}%)</TableHead>
+                      <TableHead className="font-semibold text-blue-900">Total TVA</TableHead>
+                      <TableHead className="font-semibold text-blue-900">Montant TTC</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    <TableRow className="bg-white hover:bg-yellow-50/50 transition-colors duration-200">
+                      <TableCell>{totals.totalHT.toFixed(2)} FCFA</TableCell>
+                      <TableCell>{totals.totalRemiseArticles.toFixed(2)} FCFA</TableCell>
+                      <TableCell>{totals.remiseGlobale.toFixed(2)} FCFA</TableCell>
+                      <TableCell>{totals.totalTVA.toFixed(2)} FCFA</TableCell>
+                      <TableCell className="font-bold text-blue-900">{totals.montantTTC.toFixed(2)} FCFA</TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </div>
             ) : (
-              <p className="text-center text-muted-foreground">
+              <p className="text-center text-gray-500 py-4">
                 Aucun article ajouté pour le moment.
               </p>
             )}
@@ -485,7 +516,11 @@ export default function PurchaseForm() {
         </Card>
 
         <div className="flex justify-center">
-          <Button type="submit" className="w-1/3 bg-[#4F46E5] hover:bg-[#4F46E5]/90">
+          <Button 
+            type="submit" 
+            className="w-1/3 bg-gradient-to-r from-blue-800 to-blue-900 hover:from-blue-900 hover:to-blue-950 text-white shadow transition-all duration-300 py-6 text-lg"
+            disabled={addedArticles.length === 0}
+          >
             Enregistrer
           </Button>
         </div>

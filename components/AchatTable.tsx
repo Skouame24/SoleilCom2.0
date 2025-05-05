@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -37,7 +37,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         size="sm"
         onClick={() => onPageChange(1)}
         disabled={currentPage === 1}
-        className="hidden sm:flex hover:bg-[#4F46E5] hover:text-white"
+        className="hidden sm:flex hover:bg-gradient-to-r hover:from-blue-900 hover:via-blue-800 hover:to-blue-900 hover:text-white"
       >
         Premier
       </Button>
@@ -47,7 +47,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         size="sm"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="hover:bg-[#4F46E5] hover:text-white"
+        className="hover:bg-gradient-to-r hover:from-blue-900 hover:via-blue-800 hover:to-blue-900 hover:text-white"
       >
         <ChevronLeft className="h-4 w-4 mr-1" />
         Précédent
@@ -59,7 +59,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
             <Button
               variant="outline"
               size="sm"
-              className="w-8 hover:bg-[#4F46E5] hover:text-white"
+              className="w-8 hover:bg-gradient-to-r hover:from-blue-900 hover:via-blue-800 hover:to-blue-900 hover:text-white"
               onClick={() => onPageChange(1)}
             >
               1
@@ -75,8 +75,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
             size="sm"
             className={`w-8 ${
               currentPage === page 
-                ? "bg-[#4F46E5] text-white hover:bg-[#4F46E5]/90"
-                : "hover:bg-[#4F46E5] hover:text-white"
+                ? "bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 text-white"
+                : "hover:bg-gradient-to-r hover:from-blue-900 hover:via-blue-800 hover:to-blue-900 hover:text-white"
             }`}
             onClick={() => onPageChange(page)}
           >
@@ -90,7 +90,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
             <Button
               variant="outline"
               size="sm"
-              className="w-8 hover:bg-[#4F46E5] hover:text-white"
+              className="w-8 hover:bg-gradient-to-r hover:from-blue-900 hover:via-blue-800 hover:to-blue-900 hover:text-white"
               onClick={() => onPageChange(totalPages)}
             >
               {totalPages}
@@ -104,7 +104,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         size="sm"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="hover:bg-[#4F46E5] hover:text-white"
+        className="hover:bg-gradient-to-r hover:from-blue-900 hover:via-blue-800 hover:to-blue-900 hover:text-white"
       >
         Suivant
         <ChevronRight className="h-4 w-4 ml-1" />
@@ -115,7 +115,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         size="sm"
         onClick={() => onPageChange(totalPages)}
         disabled={currentPage === totalPages}
-        className="hidden sm:flex hover:bg-[#4F46E5] hover:text-white"
+        className="hidden sm:flex hover:bg-gradient-to-r hover:from-blue-900 hover:via-blue-800 hover:to-blue-900 hover:text-white"
       >
         Dernier
       </Button>
@@ -131,7 +131,7 @@ const AchatTable = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4; // Changed to 4 items per page
+  const itemsPerPage = 4;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -192,9 +192,9 @@ const AchatTable = () => {
 
   if (error) {
     return (
-      <Card className="bg-destructive/5 border-destructive/20">
+      <Card className="bg-red-50 border-red-200">
         <CardContent className="pt-6">
-          <div className="text-center text-destructive">
+          <div className="text-center text-red-600">
             <p className="font-semibold">Erreur lors du chargement des achats</p>
             <p className="text-sm mt-1">{error}</p>
           </div>
@@ -205,7 +205,7 @@ const AchatTable = () => {
 
   return (
     <Card className="shadow-sm">
-      <CardHeader className="flex flex-row items-center justify-between bg-[#4F46E5] text-white py-4">
+      <CardHeader className="flex flex-row items-center justify-between bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 text-white py-4">
         <div className="flex items-center space-x-2">
           <BarChart className="h-5 w-5" />
           <h3 className="font-semibold text-lg">Liste des achats</h3>
@@ -214,13 +214,13 @@ const AchatTable = () => {
       <CardContent className="p-0">
         <div className="rounded-md border">
           <Table>
-            <TableHeader className="bg-[#4F46E5]/5">
-              <TableRow>
-                <TableHead className="w-24 text-[#4F46E5]">N° Achat</TableHead>
-                <TableHead className="text-[#4F46E5]">Date</TableHead>
-                <TableHead className="text-[#4F46E5]">Fournisseur</TableHead>
-                <TableHead className="text-right text-[#4F46E5]">Montant TTC</TableHead>
-                <TableHead className="w-[120px] text-center text-[#4F46E5]">Actions</TableHead>
+            <TableHeader>
+              <TableRow className="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900">
+                <TableHead className="text-white font-semibold py-4">N° Achat</TableHead>
+                <TableHead className="text-white font-semibold py-4">Date</TableHead>
+                <TableHead className="text-white font-semibold py-4">Fournisseur</TableHead>
+                <TableHead className="text-right text-white font-semibold py-4">Montant TTC</TableHead>
+                <TableHead className="w-[120px] text-center text-white font-semibold py-4">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -238,13 +238,13 @@ const AchatTable = () => {
                 currentAchats.map((achat) => (
                   <React.Fragment key={achat.id}>
                     <TableRow 
-                      className="cursor-pointer transition-colors hover:bg-muted/50"
+                      className="border-b hover:bg-gradient-to-r hover:from-yellow-50/20 hover:to-transparent transition-colors duration-200 cursor-pointer"
                       onClick={() => setActiveAchat(activeAchat === achat.id ? null : achat.id)}
                     >
-                      <TableCell className="font-medium">N°{achat.id}</TableCell>
-                      <TableCell>{formatDate(achat.dateAchat)}</TableCell>
-                      <TableCell>{fournisseurMap[achat.fournisseurId]}</TableCell>
-                      <TableCell className="text-right font-medium">
+                      <TableCell className="font-medium text-blue-900">N°{achat.id}</TableCell>
+                      <TableCell className="text-gray-600">{formatDate(achat.dateAchat)}</TableCell>
+                      <TableCell className="text-gray-600">{fournisseurMap[achat.fournisseurId]}</TableCell>
+                      <TableCell className="text-right font-medium text-gray-600">
                         {formatPrice(achat.montantTotal)}
                       </TableCell>
                       <TableCell>
@@ -252,7 +252,7 @@ const AchatTable = () => {
                           <Button 
                             variant="ghost" 
                             size="icon"
-                            className="h-8 w-8 hover:text-[#4F46E5]"
+                            className="h-8 w-8 hover:text-blue-900"
                             onClick={(e) => {
                               e.stopPropagation();
                               setActiveAchat(activeAchat === achat.id ? null : achat.id);
@@ -267,7 +267,7 @@ const AchatTable = () => {
                           <Button 
                             variant="ghost" 
                             size="icon"
-                            className="h-8 w-8 hover:text-[#4F46E5]"
+                            className="h-8 w-8 hover:text-blue-900"
                             onClick={(e) => {
                               e.stopPropagation();
                               handleShare(achat.id);
@@ -278,7 +278,7 @@ const AchatTable = () => {
                           <Button 
                             variant="ghost" 
                             size="icon"
-                            className="h-8 w-8 hover:text-[#4F46E5]"
+                            className="h-8 w-8 hover:text-blue-900"
                             onClick={(e) => {
                               e.stopPropagation();
                               handleEdit(achat.id);
@@ -292,35 +292,35 @@ const AchatTable = () => {
                     {activeAchat === achat.id && (
                       <TableRow>
                         <TableCell colSpan={5} className="p-0">
-                          <div className="bg-muted/50 p-4 animate-in slide-in-from-top duration-200">
+                          <div className="bg-yellow-50/20 p-4 animate-in slide-in-from-top duration-200">
                             <Table>
-                              <TableHeader className="bg-[#4F46E5]/5">
-                                <TableRow>
-                                  <TableHead className="text-[#4F46E5]">Désignation</TableHead>
-                                  <TableHead className="text-[#4F46E5]">Catégorie</TableHead>
-                                  <TableHead className="text-right text-[#4F46E5]">Quantité</TableHead>
-                                  <TableHead className="text-right text-[#4F46E5]">Prix U HT</TableHead>
-                                  <TableHead className="text-right text-[#4F46E5]">Remise</TableHead>
-                                  <TableHead className="text-right text-[#4F46E5]">TVA</TableHead>
+                              <TableHeader>
+                                <TableRow className="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900">
+                                  <TableHead className="text-white font-semibold">Désignation</TableHead>
+                                  <TableHead className="text-white font-semibold">Catégorie</TableHead>
+                                  <TableHead className="text-right text-white font-semibold">Quantité</TableHead>
+                                  <TableHead className="text-right text-white font-semibold">Prix U HT</TableHead>
+                                  <TableHead className="text-right text-white font-semibold">Remise</TableHead>
+                                  <TableHead className="text-right text-white font-semibold">TVA</TableHead>
                                 </TableRow>
                               </TableHeader>
                               <TableBody>
                                 {achat.articlesData.map((article) => (
-                                  <TableRow key={article.articleId}>
-                                    <TableCell>{article.designation}</TableCell>
-                                    <TableCell>
+                                  <TableRow key={article.articleId} className="border-b hover:bg-yellow-50/20">
+                                    <TableCell className="text-gray-600">{article.designation}</TableCell>
+                                    <TableCell className="text-gray-600">
                                       {article.categorieId === 1 ? 'Informatique' :
                                        article.categorieId === 2 ? 'Fournitures' :
                                        article.categorieId === 3 ? 'Communication' : ''}
                                     </TableCell>
-                                    <TableCell className="text-right">{article.quantite}</TableCell>
-                                    <TableCell className="text-right">
+                                    <TableCell className="text-right text-gray-600">{article.quantite}</TableCell>
+                                    <TableCell className="text-right text-gray-600">
                                       {formatPrice(article.prix)}
                                     </TableCell>
-                                    <TableCell className="text-right">
+                                    <TableCell className="text-right text-gray-600">
                                       {formatPrice(article.remiseArticle)}
                                     </TableCell>
-                                    <TableCell className="text-right">
+                                    <TableCell className="text-right text-gray-600">
                                       {formatPrice(article.tvaArticle)}
                                     </TableCell>
                                   </TableRow>
@@ -337,7 +337,7 @@ const AchatTable = () => {
                 <TableRow>
                   <TableCell 
                     colSpan={5} 
-                    className="h-24 text-center text-muted-foreground"
+                    className="h-24 text-center text-gray-600"
                   >
                     Aucun achat trouvé
                   </TableCell>

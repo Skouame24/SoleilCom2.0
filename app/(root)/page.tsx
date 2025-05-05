@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import { useState, useEffect } from "react";
 import { CategoryCard } from "@/components/CategoryCard";
@@ -78,37 +78,45 @@ export default function Home() {
 
   if (selectedCategory) {
     return (
-      <div className="container mx-auto px-4">
-        <Button
-          variant="ghost"
-          className="mb-6 -ml-2 text-[#4763E4] hover:text-[#3b52c4] hover:bg-[#4763E4]/10"
-          onClick={() => setSelectedCategory(null)}
-        >
-          <ChevronLeft className="mr-2 h-4 w-4" />
-          Retour aux catégories
-        </Button>
-        {renderCategoryComponent()}
+      <div className="flex flex-col min-h-[calc(100vh-4rem)]">
+        <div className="w-full max-w-7xl ">
+          <Button
+            variant="ghost"
+            className="mb-4 -ml-2 text-blue-800 hover:text-blue-900 hover:bg-yellow-100 transition-colors"
+            onClick={() => setSelectedCategory(null)}
+          >
+            <ChevronLeft className="mr-2 h-4 w-4" />
+            Retour aux catégories
+          </Button>
+        </div>
+        <div className="flex-1 w-full">
+          {renderCategoryComponent()}
+        </div>
       </div>
     );
   }
 
   return (
-    <div>
-      <main className="p-8 max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-[#4763E4] to-[#3b52c4] bg-clip-text text-transparent">
-          Domaine d&apos;activité
-        </h1>
+    <div className="w-full min-h-[calc(100vh-4rem)]">
+      <main className="max-w-7xl mx-auto px-4 py-12">
+        <div className="mb-16 text-center">
+          <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-800 via-blue-700 to-blue-800 bg-clip-text text-transparent">
+            Domaine d&apos;activité
+          </h1>
+          <div className="h-1.5 w-48 mx-auto bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-400 rounded-full" />
+        </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
           {categoryData.map((category) => (
-            <CategoryCard 
-              key={category.title}
-              title={category.title}
-              image={category.image}
-              count={isLoading ? "..." : categoryCounts[category.id] || 0}
-              onClick={() => setSelectedCategory(category.title)}
-            />
-          ))}
+            <div key={category.title} className="transform hover:scale-105 transition-transform duration-300">
+              <CategoryCard 
+                title={category.title}
+                image={category.image}
+                count={isLoading ? "..." : categoryCounts[category.id] || 0}
+                onClick={() => setSelectedCategory(category.title)}
+              />
+            </div>
+          ))} 
         </div>
       </main>
     </div>

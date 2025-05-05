@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState } from "react";
 import Link from "next/link";
@@ -6,7 +6,9 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { LayoutDashboard, ShoppingCart, Store, Users2, Package, Wallet, UserPlus, ClipboardList, Menu, LogOut, ChevronRight, BoxesIcon, PackagePlus, PackageMinus, Database, FileText, CreditCard, PieChart, TrendingUp, LucideIcon } from "lucide-react";
+import { LayoutDashboard, ShoppingCart, Store, Users2, Package, Wallet, UserPlus, ClipboardList, Menu, LogOut, ChevronRight, BoxesIcon, PackagePlus, PackageMinus, Database, FileText, CreditCard, PieChart, TrendingUp, DivideIcon as LucideIcon } from "lucide-react";
+import logo from '@/assets/logo.jpeg';
+import Image from "next/image";
 
 interface SubItem {
   title: string;
@@ -44,7 +46,6 @@ const sidebarItems: SidebarItem[] = [
         subitems: [
           { title: "Nouveau Achat", href: "/achat", icon: PackagePlus },
           { title: "Etat des Achats", href: "/etat-achat", icon: ClipboardList },
-          // { title: "Factures Achats", href: "/achats/factures", icon: FileText }
         ]
       },
       {
@@ -54,7 +55,6 @@ const sidebarItems: SidebarItem[] = [
         subitems: [
           { title: "Nouvelle Vente", href: "/vente", icon: CreditCard },
           { title: "Etat des Ventes", href: "/etat-vente", icon: ClipboardList },
-          // { title: "Factures Ventes", href: "/ventes/factures", icon: FileText }
         ]
       }
     ]
@@ -67,7 +67,6 @@ const sidebarItems: SidebarItem[] = [
         href: "/fournisseurs",
         icon: Users2,
         subitems: [
-          // { title: "Nouveau Fournisseur", href: "/fournisseurs/nouveau", icon: UserPlus },
           { title: "Gestion des Fournisseurs", href: "/fournisseurs", icon: ClipboardList }
         ]
       },
@@ -76,7 +75,6 @@ const sidebarItems: SidebarItem[] = [
         href: "/clients",
         icon: Users2,
         subitems: [
-          // { title: "Nouveau Client", href: "/clients/nouveau", icon: UserPlus },
           { title: "Gestions des Clients", href: "/clients", icon: ClipboardList }
         ]
       }
@@ -133,48 +131,52 @@ export default function Sidebar() {
 
   const dashboardItem = sidebarItems[0];
   if (!isMenuItem(dashboardItem)) {
-    return null; // ou gérer l'erreur différemment
+    return null;
   }
 
   const DashboardIcon = dashboardItem.icon;
 
   return (
     <div className={cn(
-      "flex h-screen flex-col fixed left-0 top-0 bg-[#4763E4] text-white z-20 transition-all duration-300",
-      isExpanded ? "w-64" : "w-16"
+      "flex h-screen flex-col fixed left-0 top-0 bg-gradient-to-b from-blue-800 to-blue-900 text-white z-20 transition-all duration-300 shadow-xl",
+      isExpanded ? "w-64" : "w-20"
     )}>
-      {/* Header */}
-      <div className="h-16 flex items-center px-4 border-b border-white/10">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="shrink-0 text-white/70 hover:text-white hover:bg-white/10"
-          onClick={() => setIsExpanded(!isExpanded)}
-        >
-          <Menu className="h-5 w-5" />
-        </Button>
-        <h1 className={cn(
-          "text-xl font-semibold ml-3 whitespace-nowrap overflow-hidden transition-all duration-300",
-          !isExpanded && "opacity-0 w-0"
-        )}>
-          SOLEIL<span className="text-white/80">.COM</span>
-        </h1>
+      {/* Header avec Logo */}
+      <div className="h-24 flex items-center justify-between px-2 bg-gradient-to-r from-blue-900 to-blue-800 border-b border-white/10">
+        <div className="flex-1 h-full py-2">
+          <div className="relative w-full h-full">
+          <Image
+              src={logo}
+              alt="Logo"
+              className="object-contain"
+              priority
+              
+              style={{
+                position: 'absolute',
+    height:' 100%',
+    width: '200%',
+    inset:' 0px',
+    color: 'transparent',
+              }}
+            />
+          </div>
+        </div>
       </div>
       
-      {/* Navigation */}
-      <nav className="flex-1 py-4 px-2 space-y-4 overflow-y-auto">
-        {/* Dashboard - Single Item */}
+      {/* Navigation avec Scroll */}
+      <nav className="flex-1 py-4 space-y-2 overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
+        {/* Dashboard */}
         <Link
           href={dashboardItem.href}
           className={cn(
-            "flex items-center w-full px-3 py-2 text-sm rounded-lg transition-colors",
-            "text-white/70 hover:text-white hover:bg-white/10",
-            pathname === dashboardItem.href && "bg-white/15 text-white",
+            "flex items-center mx-2 px-3 py-2.5 rounded-lg transition-all duration-200",
+            "hover:bg-white/10",
+            pathname === dashboardItem.href ? "bg-gradient-to-r from-yellow-500/20 to-yellow-600/20 text-yellow-400" : "text-white/80",
             !isExpanded && "justify-center"
           )}
         >
-          <DashboardIcon className={cn("h-4 w-4", isExpanded && "mr-3")} />
-          {isExpanded && <span>{dashboardItem.title}</span>}
+          <DashboardIcon className={cn("h-5 w-5", isExpanded && "mr-3")} />
+          {isExpanded && <span className="font-medium">{dashboardItem.title}</span>}
         </Link>
 
         {/* Sections */}
@@ -182,33 +184,35 @@ export default function Sidebar() {
           if (!('section' in section)) return null;
           
           return (
-            <div key={section.section} className="space-y-2 ">
+            <div key={section.section} className="pt-4 first:pt-0">
               {isExpanded && (
-                <h2 className="px-3 text-xs font-semibold text-white/50 uppercase tracking-wider">
+                <h2 className="px-5 mb-2 text-xs font-semibold text-yellow-400/90 uppercase tracking-wider">
                   {section.section}
                 </h2>
               )}
               <div className="space-y-1">
                 {section.items.map((item) => {
                   const ItemIcon = item.icon;
+                  const isActive = pathname === item.href || item.subitems?.some(sub => pathname === sub.href);
+                  
                   return (
-                    <div key={item.href}>
+                    <div key={item.href} className="px-2">
                       <button
                         onClick={() => toggleItem(item.href)}
                         className={cn(
-                          "flex items-center w-full px-3 py-2 text-sm rounded-lg transition-colors",
-                          "text-white/70 hover:text-white hover:bg-white/10",
-                          expandedItems.includes(item.href) && "bg-white/15 text-white",
+                          "flex items-center w-full px-3 py-2.5 rounded-lg transition-all duration-200",
+                          "hover:bg-white/10",
+                          (isActive || expandedItems.includes(item.href)) ? "bg-white/15 text-white" : "text-white/80",
                           !isExpanded && "justify-center"
                         )}
                       >
-                        <ItemIcon className={cn("h-4 w-4", isExpanded && "mr-3")} />
+                        <ItemIcon className={cn("h-5 w-5", isExpanded && "mr-3")} />
                         {isExpanded && (
                           <>
-                            <span>{item.title}</span>
+                            <span className="font-medium">{item.title}</span>
                             <ChevronRight 
                               className={cn(
-                                "h-4 w-4 ml-auto transition-transform",
+                                "h-4 w-4 ml-auto transition-transform duration-200",
                                 expandedItems.includes(item.href) && "rotate-90"
                               )}
                             />
@@ -217,27 +221,27 @@ export default function Sidebar() {
                       </button>
 
                       {isExpanded && expandedItems.includes(item.href) && item.subitems && (
-                        <Card className="mt-1 mx-2 bg-white/5 border-white/10 overflow-hidden">
-                          <div className="p-1 space-y-0.5">
-                            {item.subitems.map((subItem) => {
-                              const SubItemIcon = subItem.icon;
-                              return (
-                                <Link
-                                  key={subItem.href}
-                                  href={subItem.href}
-                                  className={cn(
-                                    "flex items-center px-3 py-2 text-sm rounded-lg transition-colors",
-                                    "text-white/60 hover:text-white hover:bg-white/10",
-                                    pathname === subItem.href && "bg-white/15 text-white"
-                                  )}
-                                >
-                                  <SubItemIcon className="h-4 w-4 mr-2 opacity-70" />
-                                  {subItem.title}
-                                </Link>
-                              );
-                            })}
-                          </div>
-                        </Card>
+                        <div className="mt-1 ml-4 pl-4 border-l border-white/10">
+                          {item.subitems.map((subItem) => {
+                            const SubItemIcon = subItem.icon;
+                            const isSubActive = pathname === subItem.href;
+                            
+                            return (
+                              <Link
+                                key={subItem.href}
+                                href={subItem.href}
+                                className={cn(
+                                  "flex items-center px-3 py-2 rounded-lg transition-all duration-200",
+                                  "text-white/70 hover:text-white hover:bg-white/10",
+                                  isSubActive && "bg-gradient-to-r from-yellow-500/20 to-yellow-600/20 text-yellow-400"
+                                )}
+                              >
+                                <SubItemIcon className="h-4 w-4 mr-2 opacity-80" />
+                                <span className="text-sm">{subItem.title}</span>
+                              </Link>
+                            );
+                          })}
+                        </div>
                       )}
                     </div>
                   );
@@ -249,13 +253,17 @@ export default function Sidebar() {
       </nav>
 
       {/* Footer */}
-      <div className="p-2 border-t border-white/10">
-        <Link href="/logout" className={cn(
-          "flex items-center w-full px-3 py-2 text-sm text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-colors",
-          !isExpanded && "justify-center"
-        )}>
-          <LogOut className={cn("h-4 w-4", isExpanded && "mr-3")} />
-          {isExpanded && "Déconnexion"}
+      <div className="p-2 mt-auto border-t border-white/10 bg-gradient-to-r from-blue-900 to-blue-800">
+        <Link 
+          href="/login" 
+          className={cn(
+            "flex items-center w-full px-3 py-2.5 rounded-lg transition-all duration-200",
+            "text-white/70 hover:text-yellow-400 hover:bg-white/10",
+            !isExpanded && "justify-center"
+          )}
+        >
+          <LogOut className={cn("h-5 w-5", isExpanded && "mr-3")} />
+          {isExpanded && <span className="font-medium">Déconnexion</span>}
         </Link>
       </div>
     </div>

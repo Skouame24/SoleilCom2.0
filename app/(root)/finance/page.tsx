@@ -146,7 +146,7 @@ export default function FinancePage() {
     }, [salesData, achats]);
 
     return (
-        <div className="p-2 max-w-7xl mx-auto">
+        <div className="flex flex-col min-h-[calc(100vh-4rem)] p-8">
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-3xl font-bold tracking-tight">Gérer mes finances</h1>
                 <Button className="bg-[#4763E4] hover:bg-[#3651C9]">

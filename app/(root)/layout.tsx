@@ -19,20 +19,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-          <div className="min-h-screen bg-gray-50/50">
-              <Sidebar />
-              
-              <div className="lg:pl-64 transition-all duration-300">
-                <Navbar />
-        
-                <main className="p-8 max-w-7xl mx-auto">
-                {children}
-
-                </main>
-              </div>
-            </div>
-
-        </body>
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-yellow-50">
+          <Sidebar />
+          <div className="lg:pl-64 min-h-screen transition-all duration-300">
+            <Navbar />
+            <main className="">
+              {children}
+            </main>
+          </div>
+        </div>
+      </body>
     </html>
   );
 }
